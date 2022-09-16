@@ -1,6 +1,8 @@
 import m from "mithril";
 import Session from "../models/session.js";
 import GameComponent from "./game.js";
+import Navbar from "./navbar.js";
+
 import UpdateNotificationComponent from "./update-notification.js";
 import SWUpdateManager from "sw-update-manager";
 
@@ -23,6 +25,7 @@ class AppComponent {
       // this.updateManager ? m(UpdateNotificationComponent, {
       //   updateManager: this.updateManager
       // }) : null,
+      m(Navbar, {}),
       m(GameComponent, { session: this.session, roomCode: attrs.roomCode }),
     ]);
   }
