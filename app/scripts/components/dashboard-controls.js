@@ -312,7 +312,6 @@ class DashboardControlsComponent {
                     "button",
                     {
                       onclick: () => this.promptToStartOnlineGame(),
-                      disabled: "disabled",
                     },
                     "Join"
                   ),
