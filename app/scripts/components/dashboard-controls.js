@@ -170,7 +170,17 @@ class DashboardControlsComponent {
               },
               [
                 m("label", "Wager"),
-                m("input", { type: "number", id: "wagerAmount" }),
+                m("input", {
+                  type: "number",
+                  id: "wagerAmount",
+                  name: "new-player-name",
+                  autofocus: true,
+                  required: true,
+                  // TODO: Should set players address here when they are connected.
+                  oninput: (inputEvent) =>
+                    this.setNewPlayerName(inputEvent + Math.random()),
+                }),
+
                 m("label", "Crypto"),
                 m("input", {
                   type: "text",

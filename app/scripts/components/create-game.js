@@ -16,7 +16,7 @@ class CreateGameModal {
   view({ isOpen = false }) {
     return isOpen
       ? m("div#createGameModal", [
-          m("h1#createGameHeading", "Create Game"),
+          m("h1#createGameHeading", "Create a Room"),
           m("div#createGameForm", [
             m("label", "Wager"),
             m("input", { type: "number", id: "wagerAmount" }),
