@@ -144,22 +144,49 @@ class DashboardControlsComponent {
       // attribute on the <form> element is necessary to show the Go button on
       // iOS keyboards
       this.session.status === "newPlayer"
-        ? m(
-            "form[action]",
-            {
-              onsubmit: (submitEvent) =>
-                this.submitNewPlayer(submitEvent, roomCode),
-            },
-            [
-              m("input[type=text][autocomplete=off]#new-player-name", {
-                name: "new-player-name",
-                autofocus: true,
-                required: true,
-                oninput: (inputEvent) => this.setNewPlayerName(inputEvent),
-              }),
-              m("button[type=submit]", roomCode ? "Join Game" : "Start Game"),
-            ]
-          )
+        ? // ? m(
+          //     "form[action]",
+          //     {
+          //       onsubmit: (submitEvent) =>
+          //         this.submitNewPlayer(submitEvent, roomCode),
+          //     },
+          //     [
+          //       m("input[type=text][autocomplete=off]#new-player-name", {
+          //         name: "new-player-name",
+          //         autofocus: true,
+          //         required: true,
+          //         oninput: (inputEvent) => this.setNewPlayerName(inputEvent),
+          //       }),
+          //       m("button[type=submit]", roomCode ? "Join Game" : "Start Game"),
+          //     ]
+          //   )
+          m("div#createGameModal", [
+            m("h1#createGameHeading", "Create Game"),
+            m(
+              "form#createGameForm",
+              {
+                onsubmit: (submitEvent) =>
+                  this.submitNewPlayer(submitEvent, roomCode),
+              },
+              [
+                m("label", "Wager"),
+                m("input", { type: "number", id: "wagerAmount" }),
+                m("label", "Crypto"),
+                m("input", {
+                  type: "text",
+                  id: "cryptoWagered",
+                  value: "MATIC",
+                  disabled: true,
+                }),
+                m(
+                  "button[type=submit]",
+                  { onclick: this.createGame },
+                  "Create Game"
+                ),
+              ]
+            ),
+            //   m(GameComponent, { session: this.session, roomCode: attrs.roomCode }),
+          ])
         : this.session.status === "waitingForPlayers"
         ? [
             m("div#share-controls", [
@@ -285,6 +312,7 @@ class DashboardControlsComponent {
                     "button",
                     {
                       onclick: () => this.promptToStartOnlineGame(),
+                      disabled: "disabled",
                     },
                     "Join"
                   ),
