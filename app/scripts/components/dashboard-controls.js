@@ -187,7 +187,7 @@ class DashboardControlsComponent {
           //       m("button[type=submit]", roomCode ? "Join Game" : "Start Game"),
           //     ]
           //   )
-          m(CreateGameModal, {})
+          m(CreateGameModal, {roomCode})
         : this.session.status === "waitingForPlayers"
         ? [
             m("div#share-controls", [

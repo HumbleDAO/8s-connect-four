@@ -1,13 +1,23 @@
 import m from "mithril";
 
 class CreateGameModal {
-  oninit(isOpen) {
-    this.isOpen = true;
+  oninit({ attrs: { roomCode } }) {
+    this.newPlayerName = "0x0000000000000000000000000000000000000000";
+    this.roomCode = roomCode;
+  
   }
 
   createGame() {
     console.log("Creating Game");
+    this.setNewPlayerName(this.newPlayerName),
+    this.startOnlineGame();
   }
+
+  setNewPlayerName(inputEvent) {
+    this.newPlayerName = inputEvent;
+  }
+
+
 
   toggleModal() {
     this.isOpen = !this.isOpen;
@@ -21,19 +31,17 @@ class CreateGameModal {
             "form#createGameForm",
             {
               onsubmit: (submitEvent) =>
-                this.submitNewPlayer(submitEvent, roomCode),
+                this.createGame(),
             },
             [
               m("label", "Wager"),
               m("input", {
                 type: "number",
                 id: "wagerAmount",
-                name: "new-player-name",
                 autofocus: true,
                 required: true,
                 // TODO: Should set players address here when they are connected.
-                oninput: (inputEvent) =>
-                  this.setNewPlayerName(inputEvent + Math.random()),
+          
               }),
 
               m("label", "Crypto"),
@@ -45,7 +53,6 @@ class CreateGameModal {
               }),
               m(
                 "button[type=submit]",
-                { onclick: this.createGame },
                 "Create Game"
               ),
             ]
