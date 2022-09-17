@@ -1,6 +1,6 @@
 import m from "mithril";
 
-class createGameModal {
+class CreateGameModal {
   oninit(isOpen) {
     this.isOpen = false;
   }
@@ -21,7 +21,7 @@ class createGameModal {
             m("label", "Wager"),
             m("input", { type: "number", id: "wagerAmount" }),
             m("label", "Crypto"),
-            m("input", { type: "text", id: "gamePassword", disabled: true }),
+            m("input", { type: "text", id: "cryptoWagered", disabled: true }),
             m("button", { onclick: this.createGame }, "Create Game"),
           ]),
           //   m(GameComponent, { session: this.session, roomCode: attrs.roomCode }),
@@ -30,4 +30,4 @@ class createGameModal {
   }
 }
 
-export default Navbar;
+export default CreateGameModal;
