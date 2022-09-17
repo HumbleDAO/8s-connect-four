@@ -5,6 +5,7 @@ class DashboardControlsComponent {
   oninit({ attrs: { game, session } }) {
     this.game = game;
     this.session = session;
+    this.userRoomCode = "";
   }
 
   // Prepare game players by creating new players (if necessary) and deciding
@@ -68,6 +69,11 @@ class DashboardControlsComponent {
   promptToStartOnlineGame() {
     this.session.status = "newPlayer";
     this.setPlayers({ gameType: "online" });
+  }
+
+  promptToJoinOnlineGame(roomCode) {
+    this.session.status = "joiningRoom";
+    // 
   }
 
   setNewPlayerName(inputEvent) {
@@ -143,7 +149,27 @@ class DashboardControlsComponent {
       // when joining an existing game for the first time; the 'action'
       // attribute on the <form> element is necessary to show the Go button on
       // iOS keyboards
-      this.session.status === "newPlayer"
+      this.session.status == "joiningRoom" ?
+
+        m("form", {
+          action: "#",
+          onsubmit: (submitEvent) => {
+            m.route.set(`/room/${this.userRoomCode}`);
+          },
+        }, [
+          m("label", "Enter your room code:"),
+          m("input", {
+            type: "text",
+            oninput: (inputEvent) => {
+              // create a string from the input event's target value
+              this.userRoomCode = inputEvent.target.value.trim();
+            },
+          }),
+          m("button", "Go"),
+
+
+        ]) 
+        : this.session.status === "newPlayer"
         ? // ? m(
           //     "form[action]",
           //     {
@@ -311,10 +337,11 @@ class DashboardControlsComponent {
                   m(
                     "button",
                     {
-                      onclick: () => this.promptToStartOnlineGame(),
+                      onclick: () => this.promptToJoinOnlineGame(),
                     },
                     "Join"
                   ),
+                  
                 ],
           ]
         : null,

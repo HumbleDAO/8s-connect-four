@@ -125,6 +125,11 @@ class GameComponent {
               })
             : null,
         ]),
+        // create a chat component placeholder
+        m("div.game-column", [
+          m("h1", "Chat Placeholder"),
+          m("div", "Chat goes here"),
+        ]),
       ]
     );
   }
