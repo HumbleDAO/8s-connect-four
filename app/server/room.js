@@ -1,5 +1,4 @@
 import moment from 'moment';
-
 import Player from './player.js';
 import Game from './game.js';
 

@@ -38,3 +38,20 @@ main {
     text-align: center;
   }
 }
+// chat box styling
+#chatbox {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  max-width: $page-max-width-hybrid;
+  margin: 0 auto;
+  margin-top: $page-spacing-top;
+  padding: 0 $page-spacing-x;
+  font-size: 0;
+  @include if-hybrid-layout() {
+    display: inline-block;
+    margin-top: 0;
+    padding: 0;
+    text-align: center;
+  }
+}

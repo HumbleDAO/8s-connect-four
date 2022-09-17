@@ -49,8 +49,9 @@ npm install
 
 To serve the app locally, run:
 
-```bash
-gulp serve
+```
+npm run build
+npm run start
 ```
 
 to run the ngrok tunnel, in a new terminal window run:
