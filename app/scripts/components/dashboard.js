@@ -45,7 +45,8 @@ class DashboardComponent {
             ? `${session.reconnectedPlayer.name} has reconnected.`
             : // If the current player needs to enter a name
             session.status === "newPlayer"
-            ? m("label[for=new-player-name]", "Enter your player name:")
+            ? // Add address here when available
+              m("label[for=new-player-name]", "")
             : // If the local player has requested a new game
             session.status === "requestingNewGame"
             ? `Asking ${
