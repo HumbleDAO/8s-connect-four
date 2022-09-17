@@ -1,5 +1,6 @@
 import m from "mithril";
 import ClipboardJS from "clipboard";
+import CreateGameModal from "./create-game.js";
 
 class DashboardControlsComponent {
   oninit({ attrs: { game, session } }) {
@@ -160,43 +161,7 @@ class DashboardControlsComponent {
           //       m("button[type=submit]", roomCode ? "Join Game" : "Start Game"),
           //     ]
           //   )
-          m("div#createGameModal", [
-            m("h1#createGameHeading", "Create Game"),
-            m(
-              "form#createGameForm",
-              {
-                onsubmit: (submitEvent) =>
-                  this.submitNewPlayer(submitEvent, roomCode),
-              },
-              [
-                m("label", "Wager"),
-                m("input", {
-                  type: "number",
-                  id: "wagerAmount",
-                  name: "new-player-name",
-                  autofocus: true,
-                  required: true,
-                  // TODO: Should set players address here when they are connected.
-                  oninput: (inputEvent) =>
-                    this.setNewPlayerName(inputEvent + Math.random()),
-                }),
-
-                m("label", "Crypto"),
-                m("input", {
-                  type: "text",
-                  id: "cryptoWagered",
-                  value: "MATIC",
-                  disabled: true,
-                }),
-                m(
-                  "button[type=submit]",
-                  { onclick: this.createGame },
-                  "Create Game"
-                ),
-              ]
-            ),
-            //   m(GameComponent, { session: this.session, roomCode: attrs.roomCode }),
-          ])
+          m(CreateGameModal, {})
         : this.session.status === "waitingForPlayers"
         ? [
             m("div#share-controls", [
