@@ -48,6 +48,11 @@ class DashboardControlsComponent {
     window.location.href = "/";
   }
 
+  addOnlinePlayer(roomCode) {
+    this.setNewPlayerName("0x....SDK");
+    this.submitNewPlayer(roomCode);
+  }
+
   closeRoom() {
     this.session.status = "closingRoom";
     this.session.emit("close-room", {}, () => {
@@ -74,7 +79,7 @@ class DashboardControlsComponent {
 
   promptToJoinOnlineGame(roomCode) {
     this.session.status = "joiningRoom";
-    // 
+    //
   }
 
   setNewPlayerName(inputEvent) {
@@ -82,8 +87,7 @@ class DashboardControlsComponent {
     inputEvent.redraw = false;
   }
 
-  submitNewPlayer(submitEvent, roomCode) {
-    submitEvent.preventDefault();
+  submitNewPlayer(roomCode) {
     if (roomCode) {
       this.addNewPlayerToGame(roomCode);
     } else {
@@ -150,26 +154,27 @@ class DashboardControlsComponent {
       // when joining an existing game for the first time; the 'action'
       // attribute on the <form> element is necessary to show the Go button on
       // iOS keyboards
-      this.session.status == "joiningRoom" ?
-
-        m("form", {
-          action: "#",
-          onsubmit: (submitEvent) => {
-            m.route.set(`/room/${this.userRoomCode}`);
-          },
-        }, [
-          m("label", "Enter your room code:"),
-          m("input", {
-            type: "text",
-            oninput: (inputEvent) => {
-              // create a string from the input event's target value
-              this.userRoomCode = inputEvent.target.value.trim();
+      this.session.status == "joiningRoom"
+        ? m(
+            "form",
+            {
+              action: "#",
+              onsubmit: (submitEvent) => {
+                m.route.set(`/room/${this.userRoomCode}`);
+              },
             },
-          }),
-          m("button", "Go"),
-
-
-        ]) 
+            [
+              m("label", "Enter your room code:"),
+              m("input", {
+                type: "text",
+                oninput: (inputEvent) => {
+                  // create a string from the input event's target value
+                  this.userRoomCode = inputEvent.target.value.trim();
+                },
+              }),
+              m("button", "Go"),
+            ]
+          )
         : this.session.status === "newPlayer"
         ? // ? m(
           //     "form[action]",
@@ -187,7 +192,11 @@ class DashboardControlsComponent {
           //       m("button[type=submit]", roomCode ? "Join Game" : "Start Game"),
           //     ]
           //   )
-          m(CreateGameModal, {roomCode})
+          m(CreateGameModal, {
+            roomCode,
+            game: this.game,
+            session: this.session,
+          })
         : this.session.status === "waitingForPlayers"
         ? [
             m("div#share-controls", [
@@ -316,7 +325,6 @@ class DashboardControlsComponent {
                     },
                     "Join"
                   ),
-                  
                 ],
           ]
         : null,
