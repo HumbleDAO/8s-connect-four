@@ -11,11 +11,13 @@ class Navbar {
     ];
   }
 
-  handleClick(itemClicked) {
-    if (itemClicked === "Connect") {
-      console.log("Connecting Wallet");
-    } else {
-      console.log("Navigating to " + itemClicked);
+  async metmask() {
+    const { ethereum } = window;
+    if (Boolean(ethereum && ethereum.isMetaMask)) {
+      let address = await ethereum.request({
+        method: "eth_requestAccounts",
+      });
+      this.userAddress = address[0];
     }
   }
 
@@ -31,7 +33,11 @@ class Navbar {
             }),
           },
           item.name == "Connect"
-            ? m("a", { onclick: () => this.handleClick(item.name) }, item.name)
+            ? m(
+                "a",
+                { onclick: () => this.metmask() },
+                this.userAddress ? this.userAddress : item.name
+              )
             : m("a", { href: item.link }, item.name)
         );
       }),

@@ -1,11 +1,11 @@
-import moment from 'moment';
+import moment from "moment";
 
-import Room from './room.js';
+import Room from "./room.js";
 
 class RoomManager {
-
   constructor() {
     this.roomsByCode = {};
+    this.createdRooms = [];
     this.inactiveRooms = new Set();
     this.pollForAbandonedRooms();
   }
@@ -18,15 +18,23 @@ class RoomManager {
     const roomCode = this.obtainRoomCode();
     const room = new Room({
       players: [],
-      code: roomCode
+      code: roomCode,
     });
     this.roomsByCode[roomCode] = room;
+    this.createdRooms.push(roomCode);
     return room;
   }
 
+  removeValueFromArray(array, value) {
+    const index = array.indexOf(value);
+    if (index > -1) {
+      array.splice(index, 1);
+    }
+  }
   closeRoom(room) {
     this.inactiveRooms.delete(room);
     delete this.roomsByCode[room.code];
+    this.removeValueFromArray(this.createdRooms, room.code);
   }
 
   obtainRoomCode() {
@@ -38,12 +46,14 @@ class RoomManager {
   }
 
   generateRandomRoomCode() {
-    let roomCode = '';
+    let roomCode = "";
     // Uppercase letters A-Z
     const startIndex = 65;
     const endIndex = 90;
     for (let i = 0; i < RoomManager.roomCodeLength; i += 1) {
-      roomCode += String.fromCharCode(Math.floor(startIndex + ((endIndex - startIndex + 1) * Math.random())));
+      roomCode += String.fromCharCode(
+        Math.floor(startIndex + (endIndex - startIndex + 1) * Math.random())
+      );
     }
     return roomCode;
   }
@@ -74,12 +84,11 @@ class RoomManager {
       });
     }, Room.abandonmentCheckInterval.asMilliseconds());
   }
-
 }
 
 // The number of characters is a given room code
 RoomManager.roomCodeLength = 4;
 // How frequently (in minutes) to check for abandoned rooms
-Room.abandonmentCheckInterval = moment.duration(30, 'minutes');
+Room.abandonmentCheckInterval = moment.duration(30, "minutes");
 
 export default RoomManager;

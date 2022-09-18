@@ -147,13 +147,11 @@ class Game extends Emitter {
       column,
     });
     this.emit("player:place-chip", this.grid.lastPlacedChip);
-    if (this.debug) {
-      this.columnHistory.push(column);
-      // The column history will only be logged on non-production sites, so we
-      // can safely disable the ESLint error
-      // eslint-disable-next-line no-console
-      console.log(this.columnHistory.join(", "));
-    }
+    this.columnHistory.push(column);
+    // The column history will only be logged on non-production sites, so we
+    // can safely disable the ESLint error
+    // eslint-disable-next-line no-console
+    console.log(this.columnHistory.join(", "));
     // TODO: Add Player History Here
 
     this.pendingChip = null;
