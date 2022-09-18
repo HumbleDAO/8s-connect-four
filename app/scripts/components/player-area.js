@@ -1,6 +1,7 @@
 import m from "mithril";
 import classNames from "../classnames.js";
 import PlayerReactionComponent from "./player-reaction.js";
+import PlayerAbilitiesComponent from "./player-abilities.js";
 
 // The player area container which contains both the name/score of each player,
 // as well as the reactions UI
@@ -22,6 +23,7 @@ class PlayerAreaComponent {
               m("div.player-name", player.name),
               // m('div.player-score', player.score),
               m(PlayerReactionComponent, { game, session, player }),
+              m(PlayerAbilitiesComponent, { game, session, player }),
             ]
           );
         })
