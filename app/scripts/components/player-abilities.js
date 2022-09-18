@@ -37,8 +37,7 @@ class PlayerAbilitiesComponent {
     // remove a single object from an array based on object property value
   }
   view({ attrs: { game, session } }) {
-    return this.player === game.currentPlayer
-      ? m("div#player-abilities", [
+     m("div#player-abilities", [
           this.abilities.map((ability) => {
             return m(`div.player-ability.${ability.type}`, {}, [
               m(
