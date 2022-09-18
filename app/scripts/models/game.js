@@ -34,6 +34,7 @@ class Game extends Emitter {
     this.winner = null;
     // The player who requests to end the game or start a new one
     this.requestingPlayer = null;
+    this.skipTurn = false;
     // Keep track of the columns where chips are placed in debug mode (extremely
     // useful for creating new unit tests from real games)
     if (debug) {
@@ -53,6 +54,10 @@ class Game extends Emitter {
     this.inProgress = true;
     this.emit("game:start");
     this.startTurn();
+  }
+
+  enableSkipTurn() {
+    this.skipTurn = true;
   }
 
   // End the game without resetting the grid
@@ -135,7 +140,10 @@ class Game extends Emitter {
   endTurn() {
     if (this.inProgress) {
       // Switch to next player's turn
-      this.currentPlayer = this.getOtherPlayer(this.currentPlayer);
+      if (!this.skipTurn) {
+        this.currentPlayer = this.getOtherPlayer(this.currentPlayer);
+      }
+      this.skipTurn = false;
       this.startTurn();
     }
   }
