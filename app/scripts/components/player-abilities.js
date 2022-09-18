@@ -37,23 +37,22 @@ class PlayerAbilitiesComponent {
     // remove a single object from an array based on object property value
   }
   view({ attrs: { game, session } }) {
-     m("div#player-abilities", [
-          this.abilities.map((ability) => {
-            return m(`div.player-ability.${ability.type}`, {}, [
-              m(
-                "button.player-ability-name",
-                {
-                  onclick: () => {
-                    this.useAbility(ability);
-                  },
-                },
-                ability.name
-              ),
-              // m('div.player-score', player.score),
-            ]);
-          }),
-        ])
-      : null;
+    return m("div#player-abilities", [
+      this.abilities.map((ability) => {
+        return m(`div.player-ability.${ability.type}`, {}, [
+          m(
+            "button.player-ability-name",
+            {
+              onclick: () => {
+                this.useAbility(ability);
+              },
+            },
+            ability.name
+          ),
+          // m('div.player-score', player.score),
+        ]);
+      }),
+    ]);
   }
 }
 export default PlayerAbilitiesComponent;
