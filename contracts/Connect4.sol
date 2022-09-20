@@ -8,6 +8,7 @@ contract Connect4 is Ownable {
     }
 
     enum GameResult {
+        Undefined,
         CreatorWon,
         CreatorLost,
         Draw
@@ -16,6 +17,7 @@ contract Connect4 is Ownable {
     struct GameRoom {
         address creator;
         GameStatus gameStatus;
+        GameResult gameResult;
         uint256 wagerAmount;
     }
 
