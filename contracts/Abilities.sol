@@ -7,7 +7,7 @@ contract Abilities is ERC1155, AccessControl {
     bytes32 public constant ADMIN = keccak256("ADMIN");
 
     constructor() ERC1155("https://game.example/api/item/{id}.json") {
-        
+        _setupRole(DEFAULT_ADMIN_ROLE, _msgSender());
     }
 
     function mint(uint256 id, uint256 amount) onlyAdmin external {
